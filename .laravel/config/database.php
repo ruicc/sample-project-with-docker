@@ -7,7 +7,8 @@ case 'local':
 case 'docker':
     $dbhost =  env('DOCKER_DB_HOST');
     break;
-default: echo 'Env not found'; exit();
+default:
+    $dbhost = env('DB_HOST', 'localhost');
 }
 
 return [
