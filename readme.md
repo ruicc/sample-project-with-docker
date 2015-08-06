@@ -23,3 +23,12 @@ How do developers combine docker with their existing project?
 * boot2docker
 * docker
 * docker-compose
+
+
+## A sample project with laravel-tools
+
+How do we add laravel tools(migration, seeder, phpunit, ...) into existing project?
+
+### Approach
+
+* All code about laravel is in .laravel directory
