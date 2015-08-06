@@ -14,6 +14,8 @@ How do developers combine docker with their existing project?
 
 * All code about docker is in .docker directory
 * Several commands are in Makefile to launch docker
+* Projects have a Dockerfile
+	* Only project knows the way to run itself in a container
 
 ### Requirements
 
