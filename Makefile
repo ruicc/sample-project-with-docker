@@ -1,6 +1,6 @@
 
 
-DOCKER_IP = $(shell boot2docker ip)
+BOOT2DOCKER_IP = $(shell boot2docker ip)
 DOCKER_VARNISH_PORT = 5000
 
 DOCKER_COMPOSE = docker-compose --file .docker/docker-compose.yml
@@ -22,8 +22,8 @@ stop-boot2docker:
 
 migrate:
 	# Check config/database.php to see how it switches database host.
-	DOCKER_DB_HOST=$(shell boot2docker ip) $(ARTISAN) migrate --env=docker
+	DOCKER_DB_HOST=$(BOOT2DOCKER_IP) $(ARTISAN) migrate --env=docker
 
 hello:
-	curl -v $(DOCKER_IP):$(DOCKER_VARNISH_PORT)
+	curl -v $(BOOT2DOCKER_IP):$(DOCKER_VARNISH_PORT)
 
