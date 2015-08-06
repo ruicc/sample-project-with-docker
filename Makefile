@@ -8,7 +8,7 @@ DOCKER_COMPOSE = $(shell which docker-compose)
 ARTISAN = ./artisan
 
 run-in-docker:
-	$(DOCKER_COMPOSE) --file docker/docker-compose.yml up -d
+	$(DOCKER_COMPOSE) --file .docker/docker-compose.yml up -d
 
 migrate:
 	$(ARTISAN) migrate --env=docker

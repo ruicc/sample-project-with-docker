@@ -12,7 +12,7 @@ How do developers combine docker with their existing project?
 
 ### Approach
 
-* All code about docker is in docker directory
+* All code about docker is in .docker directory
 * Several commands are in Makefile to launch docker
 
 ### Requirements
