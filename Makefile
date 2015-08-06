@@ -5,7 +5,7 @@ DOCKER_VARNISH_PORT = 5000
 
 DOCKER_COMPOSE = docker-compose --file .docker/docker-compose.yml
 
-ARTISAN = ./artisan
+ARTISAN = .laravel/artisan
 
 run-in-docker:
 	$(DOCKER_COMPOSE) up -d
