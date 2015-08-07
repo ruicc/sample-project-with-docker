@@ -19,3 +19,5 @@ COPY ./apache2.conf /etc/apache2/apache2.conf
 
 # Enable mod_rewrite
 RUN a2enmod rewrite
+
+WORKDIR /srv/www/code

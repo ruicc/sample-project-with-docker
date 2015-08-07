@@ -27,3 +27,10 @@ datamysql:
         MYSQL_DATABASE: dev-db
         MYSQL_USER: dev-user
         MYSQL_PASSWORD: dev-pw
+test:
+    build: ./web
+    volumes:
+        - ..:/srv/www/code
+    links:
+        - web
+    command: make test

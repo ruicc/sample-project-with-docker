@@ -13,7 +13,11 @@ class ExampleTest extends TestCase
      */
     public function testBasicExample()
     {
-        $this->visit('/')
-             ->see('Laravel 5');
+        $this->assertTrue(true);
+        $this->assertTrue(true);
+        $this->assertTrue(true);
+        $this->assertTrue(false);
+//        $this->visit('/')
+//             ->see('Laravel 5');
     }
 }
