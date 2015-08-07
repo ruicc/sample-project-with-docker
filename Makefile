@@ -1,15 +1,19 @@
 
+PROJECT_ROOT = $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
-BOOT2DOCKER_IP = $(shell boot2docker ip)
-
-DOCKER_VARNISH_PORT = 5000
-
-DOCKER_COMPOSE = docker-compose --file .docker/docker-compose.yml
+DOCKER_COMPOSE = $(shell which docker-compose) --file $(PROJECT_ROOT)/.docker/docker-compose.yml
 
 ARTISAN = .laravel/artisan
 
 PHPUNIT = vendor/bin/phpunit
 
+BOOT2DOCKER = $(shell which boot2docker)
+
+BOOT2DOCKER_IP = $(shell $(BOOT2DOCKER) ip)
+
+DOCKER_VARNISH_PORT = 5000
+
+make:
 
 run-in-docker:
 	$(DOCKER_COMPOSE) up -d web datamysql varnish
