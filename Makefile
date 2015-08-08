@@ -22,7 +22,9 @@ stop-docker:
 	$(DOCKER_COMPOSE) stop
 
 test-in-docker:
-	$(DOCKER_COMPOSE) up -d test web datamysql varnish
+	$(DOCKER_COMPOSE) build test
+	$(DOCKER_COMPOSE) up test
+	$(DOCKER_COMPOSE) stop
 
 start-boot2docker:
 	boot2docker up

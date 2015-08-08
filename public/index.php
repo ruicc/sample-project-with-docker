@@ -1,17 +1,26 @@
 <?php
 
-# xhprof
-xhprof_enable();
-$foo = strlen('heyhey');
-$profile = xhprof_disable();
+$uri = $_SERVER['REQUEST_URI'];
+$method = $_SERVER['REQUEST_METHOD'];
+list($_, $cont) = explode('/', "$uri/");
 
-echo '<pre>';
-    print_r($profile);
 
-    # curl
-    $ch = curl_init('http://httpbin.org/get');
-    curl_exec($ch);
-    curl_close($ch);
-echo '</pre>';
-
-phpinfo();
+switch ([$method, $cont]) {
+case ['POST', 'user']:
+    header('HTTP/1.1 200 OK');
+    header('Content-Type: application/json');
+    exit;
+case ['GET', 'user']:
+    header('HTTP/1.1 200 OK');
+    header('Content-Type: application/json');
+    echo json_encode([
+        'id' => 123,
+        'name' => 'Alice',
+        'age' => 26,
+        ]);
+    exit;
+default:
+    header('HTTP/1.1 404 Not Found');
+    exit;
+    break;
+}
