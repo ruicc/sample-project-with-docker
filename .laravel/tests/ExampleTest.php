@@ -16,8 +16,5 @@ class ExampleTest extends TestCase
         $this->assertTrue(true);
         $this->assertTrue(true);
         $this->assertTrue(true);
-        $this->assertTrue(false);
-//        $this->visit('/')
-//             ->see('Laravel 5');
     }
 }
