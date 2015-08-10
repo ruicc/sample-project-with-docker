@@ -4,6 +4,8 @@ set -e
 WORKSPACE=$(dirname $(dirname $(realpath $0)))
 
 # Register the following lines to Jenkins
+pushd "${WORKSPACE}/.laravel" && make && popd
+
 eval "$(/usr/local/bin/boot2docker shellinit)"
 
 /usr/local/bin/docker-compose --file "${WORKSPACE}/.docker/docker-compose.yml" build test
