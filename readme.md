@@ -17,13 +17,6 @@ How do developers combine docker with their existing project?
 * Projects have a Dockerfile
 	* Only project knows the way to run itself in a container
 
-### Requirements
-
-* VirtualBox
-* boot2docker
-* docker
-* docker-compose
-
 
 ## A sample project with laravel-tools
 
@@ -32,3 +25,31 @@ How do we add laravel tools(migration, seeder, phpunit, ...) into existing proje
 ### Approach
 
 * All code about laravel is in .laravel directory
+
+## Provided Featureas
+
+* Docker as an Environment of running web application
+* Migration tools
+* Testing tools
+* Support Jenkins for CI
+
+## Requirements
+
+* VirtualBox
+* boot2docker
+* docker
+* docker-compose
+
+## How to use
+
+1. Make sure `boot2docker` is running and environment variables to access Docker are set unless on Linux
+2. `make run-in-docker`
+
+## Jenkins integration
+
+Check .laravel/jenkins-ci.sh and register the part of it to Jenkins as a shell script.
+
+
+## Known Issues
+
+* Performance issue due to "shared-folder" by VirtualBox
