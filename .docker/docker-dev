@@ -1,0 +1,52 @@
+#!/bin/bash
+set -eu
+
+DOCKER_DIR="$(dirname $(realpath $0))"
+WEB_IMAGE_TAG="dev/web"
+LB_IMAGE_TAG="dev/nginx"
+DB_IMAGE_TAG="dev/mysql"
+WEB_CONTAINER_NUM="2"
+
+case "$1" in
+build)
+    docker build -t "${WEB_IMAGE_TAG}" "${DOCKER_DIR}/web"
+    docker build -t "${LB_IMAGE_TAG}" "${DOCKER_DIR}/nginx"
+    docker build -t "${DB_IMAGE_TAG}" "${DOCKER_DIR}/mysql"
+	;;
+run)
+    mysql_cid="$(docker run -d \
+        -p "3306:3306" \
+        -v "/tmp/data/mysql:/var/lib/mysql" \
+        -e "MYSQL_ROOT_PASSWORD=admin-password" \
+        -e "MYSQL_DATABASE=dev-db" \
+        -e "MYSQL_USER=dev-user" \
+        -e "MYSQL_PASSWORD=dev-pw" \
+        ${DB_IMAGE_TAG})"
+
+    web_cids=()
+    for n in $(seq 1 $WEB_CONTAINER_NUM);
+    do
+        web_cids[$n]=$(docker run -d \
+            --link "${mysql_cid}:mysql" \
+            -v "$(dirname ${DOCKER_DIR}):/srv/www/code" "${WEB_IMAGE_TAG}");
+    done
+
+    links=""
+    for n in $(seq 1 $WEB_CONTAINER_NUM);
+    do
+        links="${links} --link ${web_cids[$n]}:web${n}";
+    done
+
+#    echo "links: ${links}"
+
+    docker run -d -p "5000:80" ${links} "${LB_IMAGE_TAG}" > /dev/null
+    ;;
+stop)
+    docker ps | awk ' $2 ~ /dev\// {print $1}' | xargs docker stop
+    ;;
+kill)
+    docker ps | awk ' $2 ~ /dev\// {print $1}' | xargs docker kill
+    ;;
+*)
+    echo 'Usage: docker-dev "{build|run|stop|kill}"'
+esac

@@ -12,11 +12,17 @@
 # new 4.0 format.
 vcl 4.0;
 
+load directors;
+
 # Default backend definition. Set this to point to your content server.
 backend default {
     .host = "backend-host";
     .port = "80";
 }
+
+#backend web1 { .host = "web1"; .port = "80"; }
+#backend web2 { .host = "web2"; .port = "80"; }
+#backend web3 { .host = "web3"; .port = "80"; }
 
 sub vcl_recv {
     # Happens before we check if we have this in cache already.
