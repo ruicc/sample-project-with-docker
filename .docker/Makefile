@@ -1,7 +1,7 @@
 
 MAKEFILE_DIR=$(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
-DOCKER_DEV=$(MAKEFILE_DIR)/docker-dev
+DOCKER_DEV=$(MAKEFILE_DIR)docker-dev
 
 DOCKER_IP=$(shell docker-machine ip default)
 
