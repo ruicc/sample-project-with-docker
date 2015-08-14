@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 
-DOCKER_DIR="$(dirname $(realpath $0))"
+SCRIPT_DIR="$(cd $(dirname "$0") && pwd -P)"
 WEB_IMAGE_TAG="dev/web"
 LB_IMAGE_TAG="dev/nginx"
 DB_IMAGE_TAG="dev/mysql"
@@ -9,9 +9,9 @@ WEB_CONTAINER_NUM="2"
 
 case "$1" in
 build)
-    docker build -t "${WEB_IMAGE_TAG}" "${DOCKER_DIR}/web"
-    docker build -t "${LB_IMAGE_TAG}" "${DOCKER_DIR}/nginx"
-    docker build -t "${DB_IMAGE_TAG}" "${DOCKER_DIR}/mysql"
+    docker build -t "${WEB_IMAGE_TAG}" "${SCRIPT_DIR}/web"
+    docker build -t "${LB_IMAGE_TAG}" "${SCRIPT_DIR}/nginx"
+    docker build -t "${DB_IMAGE_TAG}" "${SCRIPT_DIR}/mysql"
 	;;
 run)
     mysql_cid="$(docker run -d \
@@ -28,7 +28,7 @@ run)
     do
         web_cids[$n]=$(docker run -d \
             --link "${mysql_cid}:mysql" \
-            -v "$(dirname ${DOCKER_DIR}):/srv/www/code" "${WEB_IMAGE_TAG}");
+            -v "$(dirname ${SCRIPT_DIR}):/srv/www/code" "${WEB_IMAGE_TAG}");
     done
 
     links=""
